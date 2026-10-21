@@ -1,0 +1,766 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title> Amr — Programming Developer </title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
+
+<style>
+:root{
+--bg1:#050816;
+--bg2:#020617;
+--accent:#7c3aed;
+--accent2:#06b6d4;
+--accent3:#ec4899;
+--accent4:#22c55e;
+--text:#e6eef8;
+--muted:#9aa7bd;
+--card:rgba(255,255,255,0.05);
+--card-bg:#1b1f2a;
+--music-bg:#3b3f53;
+}
+
+/* GENERAL */
+body{
+margin:0;
+font-family:Inter;
+background:linear-gradient(120deg,var(--bg1),var(--bg2));
+color:var(--text);
+overflow-x:hidden;
+transition:background 0.6s ease;
+}
+
+/* LOADER */
+#loader{
+position:fixed;
+inset:0;
+background:#020617;
+display:flex;
+align-items:center;
+justify-content:center;
+z-index:9999;
+font-size:28px;
+font-weight:800;
+letter-spacing:3px;
+}
+#loader span{
+color:var(--accent);
+animation:pulse 1.2s infinite;
+}
+@keyframes pulse{
+0%{opacity:.3}
+50%{opacity:1}
+100%{opacity:.3}
+}
+
+/* NAVBAR */
+.navbar{
+position:fixed;
+top:20px;
+left:50%;
+transform:translateX(-50%);
+display:flex;
+align-items:center;
+justify-content:center;
+padding:12px 45px;
+border-radius:40px;
+background:linear-gradient(270deg,var(--accent),var(--accent2),var(--accent3),var(--accent4));
+background-size:600% 600%;
+animation:navGradient 30s ease infinite;
+backdrop-filter:blur(14px);
+box-shadow:0 10px 35px rgba(124,58,237,.35);
+border:1px solid rgba(255,255,255,.08);
+transition:transform 0.6s ease, opacity 0.6s ease;
+z-index:1000;
+transform-style:preserve-3d;
+}
+@keyframes navGradient{
+0%{background-position:0% 50%}
+50%{background-position:100% 50%}
+100%{background-position:0% 50%}
+}
+.navbar:hover{
+transform:translateX(-50%) rotateX(6deg) scale(1.05);
+box-shadow:0 20px 60px rgba(124,58,237,.6);
+}
+.navbar.hide{
+transform:translate(-50%,-120px);
+opacity:0;
+}
+.logo{
+font-weight:700;
+font-size:16px;
+text-align:center;
+white-space:nowrap;
+color:white;
+}
+
+/* PARTICLES */
+#particles-js{
+position:fixed;
+inset:0;
+z-index:-30;
+}
+
+/* NEON BACKGROUND */
+.neon-bg{
+position:fixed;
+inset:0;
+z-index:-20;
+overflow:hidden;
+}
+.neon-line{
+position:absolute;
+width:600px;
+height:600px;
+background:radial-gradient(circle,rgba(124,58,237,0.4),transparent 70%);
+filter:blur(100px);
+animation:move 18s linear infinite;
+}
+.neon-line.two{
+background:radial-gradient(circle,rgba(6,182,212,0.4),transparent 70%);
+animation-duration:25s;
+right:-200px;
+bottom:-200px;
+}
+.neon-line.one{
+left:-200px;
+top:-200px;
+}
+@keyframes move{
+0%{transform:translate(0,0)}
+50%{transform:translate(120px,80px)}
+100%{transform:translate(0,0)}
+}
+
+/* CONTAINER */
+.container{
+max-width:1100px;
+margin:auto;
+padding:140px 20px;
+}
+
+/* WELCOME */
+.welcome{
+text-align:center;
+margin-bottom:80px;
+}
+.welcome h1{
+font-size:42px;
+margin-bottom:20px;
+}
+.welcome p{
+color:var(--muted);
+font-size:18px;
+line-height:1.8;
+}
+
+/* HERO */
+.hero{
+display:flex;
+gap:40px;
+flex-wrap:wrap;
+align-items:center;
+justify-content:center;
+text-align:center;
+}
+
+/* PROFILE CARD */
+.profile-card{
+width:320px;
+background:var(--card-bg);
+border-radius:16px;
+padding:20px;
+border:1px solid rgba(255,255,255,.08);
+backdrop-filter:blur(12px);
+transition:0.5s;
+transform-style:preserve-3d;
+box-shadow:0 15px 40px rgba(124,58,237,0.4);
+margin:0 auto;
+}
+
+/* تحسين تمركز إضافي */
+.hero > .profile-card{
+margin-left:auto;
+margin-right:auto;
+}
+
+.profile-card:hover{
+transform:rotateY(8deg) rotateX(6deg) translateY(-8px);
+box-shadow:0 25px 60px rgba(124,58,237,.6);
+}
+
+.avatar{
+height:220px;
+border-radius:12px;
+overflow:hidden;
+}
+
+.avatar img{
+width:100%;
+height:100%;
+object-fit:cover;
+background:var(--music-bg);
+transition:background 0.6s ease;
+}
+
+.tags{
+display:flex;
+gap:8px;
+flex-wrap:wrap;
+justify-content:center;
+}
+
+.tag{
+background:rgba(255,255,255,.08);
+padding:6px 12px;
+border-radius:12px;
+transition:transform 0.2s ease;
+cursor:pointer;
+}
+
+.tag:active{
+transform:scale(0.95) rotate(-2deg);
+}
+    
+/* SERVICES */
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
+}
+.service{
+padding:20px;
+border-radius:16px;
+background:linear-gradient(145deg,rgba(50,50,70,0.9),rgba(30,30,45,0.9));
+border:1px solid rgba(255,255,255,.05);
+backdrop-filter:blur(8px);
+transition:0.4s;
+cursor:pointer;
+box-shadow:0 8px 25px rgba(124,58,237,0.4);
+}
+.service:hover{
+transform:translateY(-6px) scale(1.02);
+box-shadow:0 20px 45px rgba(124,58,237,.6);
+}
+.service:active{
+transform:scale(0.98) rotate(-1deg);
+}
+
+/* PORTFOLIO */
+.portfolio{
+margin-top:60px;
+}
+.project{
+background:linear-gradient(135deg,rgba(40,40,60,0.85),rgba(20,20,30,0.85));
+padding:22px;
+border-radius:16px;
+margin-bottom:18px;
+cursor:pointer;
+transition:0.4s;
+box-shadow:0 10px 35px rgba(124,58,237,0.35);
+}
+.project:hover{
+transform:translateY(-6px) scale(1.02);
+box-shadow:0 22px 50px rgba(124,58,237,.55);
+}
+.project:active{
+transform:scale(0.98) rotate(-1deg);
+}
+
+/* MUSIC */
+.music {
+    margin-top: 60px;
+    text-align: center;
+    background: var(--music-bg);
+    padding: 20px;
+    border-radius: 16px;
+    transition: background 0.6s ease, box-shadow 0.3s ease;
+    box-shadow: 0 10px 35px rgba(124, 58, 237, 0.25);
+}
+
+/* CUSTOM AUDIO STYLE */
+.music audio {
+    width: 100%;
+    border-radius: 12px;
+    outline: none;
+    accent-color: #3b82f6; /* لون أزرق المتصفح */
+    background: linear-gradient(90deg, #3b82f6, #60a5fa); /* متدرج أزرق */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+/* Webkit Custom Panel */
+.music audio::-webkit-media-controls-panel {
+    background: linear-gradient(90deg, #3b82f6, #60a5fa); /* متدرج أزرق */
+    border-radius: 12px;
+}
+
+/* Hover Animation */
+.music audio:hover {
+    transform: scale(1.02);
+    box-shadow: 0 10px 25px rgba(59, 130, 246, 0.5);
+}
+
+/* CONTACT */
+.contact-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:16px;
+}
+.contact-card{
+padding:16px;
+background:linear-gradient(135deg,rgba(40,40,60,0.85),rgba(30,30,45,0.85));
+border-radius:16px;
+border:1px solid rgba(255,255,255,.05);
+transition:0.3s;
+cursor:pointer;
+box-shadow:0 8px 25px rgba(124,58,237,0.3);
+}
+.contact-card:hover{
+transform:translateY(-4px);
+box-shadow:0 18px 40px rgba(124,58,237,.55);
+}
+.contact-card a{
+text-decoration:none;
+color:var(--text);
+font-weight:700;
+display:flex;
+gap:10px;
+}
+.contact-card:active{
+transform:scale(0.97) rotate(-1deg);
+}
+
+/* footer */
+footer{
+text-align:center;
+margin-top:60px;
+color:var(--muted);
+}
+
+/* MOBILE */
+@media (max-width:768px){
+.navbar{
+width:90%;
+padding:10px 20px;
+}
+.logo{
+font-size:14px;
+}
+.hero{
+justify-content:center;
+text-align:center;
+}
+.profile-card{
+width:100%;
+max-width:320px;
+}
+}
+</style>
+</head>
+
+<body>
+
+<div id="loader">X-<span>Global</span></div>
+
+<div id="particles-js"></div>
+
+<div class="neon-bg">
+<div class="neon-line one"></div>
+<div class="neon-line two"></div>
+</div>
+
+<nav class="navbar" id="navbar">
+<div class="logo">
+Amr Ayman — Programming Developer
+</div>
+</nav>
+
+<main class="container">
+
+<header class="hero" style="text-align:center; margin-bottom:60px;">
+  <aside class="profile-card">
+    <!-- Banner (GIF أو PNG/JPG) -->
+    <div class="banner">
+      <img src="banner.gif" alt="Profile Banner">
+    </div>
+
+    <!-- Avatar -->
+    <div class="avatar">
+      <img src="R1.png" alt="Amr Ayman Avatar">
+    </div>
+
+    <!-- الاسم والوظيفة -->
+    <h3>Amr Ayman Mahfouz</h3>
+
+    <!-- الوصف القصير -->
+    <p class="profile-desc">
+    </p>
+
+    <!-- اللغات / التاجز -->
+    <div class="tags">
+      <span class="tag"><i class="fa-brands fa-node-js"></i> Node</span>
+      <span class="tag"><i class="fa-brands fa-react"></i> React</span>
+      <span class="tag"><i class="fa-brands fa-python"></i> Python</span>
+      <span class="tag"><i class="fa-solid fa-robot"></i> AI</span>
+      <span class="tag"><i class="fa-brands fa-html5"></i> HTML</span>
+      <span class="tag"><i class="fa-brands fa-css3-alt"></i> CSS</span>
+      <span class="tag"><i class="fa-brands fa-discord"></i> Discord</span>
+      <span class="tag"><i class="fa-brands fa-java"></i> Java</span>
+    </div>
+  </aside>
+</header>
+
+<section class="welcome" style="text-align:center; margin-bottom:80px;">
+  <div style="
+      display:inline-block;
+      background: rgba(30,30,45,0.85);
+      padding: 30px 40px;
+      border-radius: 20px;
+      box-shadow: 0 0 30px rgba(124,58,237,0.6), 0 0 60px rgba(124,58,237,0.3);
+      border:1px solid rgba(124,58,237,0.4);
+      max-width:900px;
+      margin:auto;
+      backdrop-filter:blur(6px);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+  " onmouseover="this.style.transform='scale(1.02)'; this.style.boxShadow='0 0 40px rgba(124,58,237,0.7), 0 0 70px rgba(124,58,237,0.4)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 0 30px rgba(124,58,237,0.6), 0 0 60px rgba(124,58,237,0.3)';">
+    <p style="color:#9aa7bd; font-size:18px; line-height:1.8;">
+      <i class="fa-solid fa-user" style="color:#06b6d4; margin-right:6px;"></i>
+      مرحبًا، أنا <strong>Amr Ayman</strong>، مطور برمجيات ومؤسس فريق <strong>Global X</strong>.<br><br>
+      <i class="fa-solid fa-lightbulb" style="color:#facc15; margin-right:6px;"></i>
+      شغفي هو تحويل الأفكار إلى حلول رقمية مبتكرة باستخدام أحدث التقنيات.<br><br>
+      <i class="fa-solid fa-users" style="color:#ec4899; margin-right:6px;"></i>
+      فريق <strong>Global X</strong> يركز على تقديم مشاريع رقمية عالية الجودة، من تطوير المواقع إلى أنظمة الذكاء الاصطناعي.<br><br>
+      <i class="fa-solid fa-rocket" style="color:#22c55e; margin-right:6px;"></i>
+      نعمل على تصميم حلول قوية وفعّالة تساعد الشركات والأفراد على تحقيق أهدافهم التقنية.
+    </p>
+  </div>
+</section>
+
+<style>
+.profile-card{
+  width:320px;
+  background:var(--card-bg);
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,.08);
+  backdrop-filter:blur(12px);
+  box-shadow:0 15px 40px rgba(124,58,237,0.4);
+  text-align:center;
+  overflow:hidden;
+  padding-bottom:20px;
+  position:relative;
+  transition:0.4s;
+}
+
+.profile-card:hover{
+  transform:translateY(-6px) scale(1.02);
+  box-shadow:0 25px 60px rgba(124,58,237,.6);
+}
+
+.banner{
+  width:100%;
+  height:120px;
+  overflow:hidden;
+  border-top-left-radius:16px;
+  border-top-right-radius:16px;
+  position:relative;
+}
+
+.banner img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  filter:brightness(0.85);
+  transition:transform 0.5s ease;
+}
+
+.banner img:hover{
+  transform:scale(1.05);
+}
+
+/* رفع الفتار أسفل البانر بشكل متوازن */
+.avatar{
+  width:100px;
+  height:100px;
+  border-radius:50%;
+  overflow:hidden;
+  border:3px solid #7c3aed;
+  background:var(--music-bg);
+  position:absolute;
+  top:90px; /* تم تعديل المسافة لتكون أسفل منتصف البانر */
+  left:50%;
+  transform:translateX(-50%);
+  transition:transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.avatar img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+
+.profile-card h3{
+  margin-top:70px; /* لتجنب التداخل مع الفتار */
+  font-size:18px;
+  font-weight:700;
+  color:var(--text);
+}
+
+.profile-desc{
+  color:var(--muted);
+  font-size:14px;
+  margin-bottom:12px;
+}
+
+.tags{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:8px;
+  margin-top:10px;
+}
+
+.tag{
+  background:rgba(255,255,255,.08);
+  padding:6px 12px;
+  border-radius:12px;
+  display:flex;
+  align-items:center;
+  font-size:13px;
+  gap:4px;
+  transition:0.3s;
+  cursor:pointer;
+}
+
+.tag:hover{
+  transform:scale(1.05);
+  box-shadow:0 4px 12px rgba(124,58,237,0.5);
+}
+</style>
+    
+    
+<section style="margin-top:60px">
+  <h2 style="text-align:center; font-size:32px; margin-bottom:30px; color:var(--accent);">
+    خدماتي
+  </h2>
+  
+  <div class="grid">
+    
+    <div class="service">
+      <h3>
+        <i class="fa-solid fa-globe" style="color:#3b82f6; margin-right:6px;"></i>
+        تطوير مواقع
+      </h3>
+      <p>
+        تصميم وبرمجة مواقع ويب حديثة، سريعة، ومتجاوبة لجميع الأجهزة، مع التركيز على تجربة المستخدم والأداء العالي.
+      </p>
+    </div>
+    
+    <div class="service">
+      <h3>
+        <i class="fa-brands fa-discord" style="color:#7289da; margin-right:6px;"></i>
+        بوتات ديسكورد
+      </h3>
+      <p>
+        تطوير أنظمة بوتات متقدمة لسيرفرات ديسكورد، تشمل إدارة الأعضاء، التفاعل الذكي، والأتمتة الكاملة للمهام.
+      </p>
+    </div>
+    
+    <div class="service">
+      <h3>
+        <i class="fa-solid fa-brain" style="color:#22c55e; margin-right:6px;"></i>
+        أدوات ذكاء اصطناعي
+      </h3>
+      <p>
+        أدوات وبرمجيات ذكاء اصطناعي تساعد على أتمتة العمليات وتحليل البيانات بسرعة ودقة، لتسهيل العمل وتحسين الإنتاجية.
+      </p>
+    </div>
+    
+    <div class="service">
+      <h3>
+        <i class="fa-solid fa-chart-simple" style="color:#facc15; margin-right:6px;"></i>
+        لوحات تحكم
+      </h3>
+      <p>
+        تصميم Dashboards احترافية لإدارة البيانات، عرض الإحصائيات والتحليلات بطريقة واضحة ومرنة لمتابعة الأداء.
+      </p>
+    </div>
+    
+  </div>
+</section>
+    
+<section class="portfolio" style="margin-top:60px;">
+  <h2 style="text-align:center; font-size:32px; margin-bottom:30px; color:var(--accent);">
+    مشاريعي
+  </h2>
+
+  <div class="grid">
+    <div class="project">
+      <h3>
+        <i class="fa-brands fa-discord" style="color:#7289da; margin-right:6px;"></i>
+        GxBot
+      </h3>
+      <p>
+        بوت ديسكورد متكامل لإدارة السيرفرات، التفاعل مع الأعضاء، وأتمتة المهام المجتمعية بفعالية.
+      </p>
+    </div>
+
+    <div class="project">
+      <h3>
+        <i class="fa-solid fa-robot" style="color:#22c55e; margin-right:6px;"></i>
+        AI Automation Tools
+      </h3>
+      <p>
+        سكربتات وأدوات ذكاء اصطناعي لتسهيل العمليات التقنية، أتمتة المهام وتحليل البيانات بسرعة ودقة.
+      </p>
+    </div>
+
+    <div class="project">
+      <h3>
+        <i class="fa-solid fa-gamepad" style="color:#ec4899; margin-right:6px;"></i>
+        Games X
+      </h3>
+      <p>
+        لعبة ثنائية الأبعاد ممتعة وتفاعلية، مع تجربة لعب سلسة وممتعة للمستخدمين.
+      </p>
+    </div>
+
+    <div class="project">
+      <h3>
+        <i class="fa-solid fa-code" style="color:#f97316; margin-right:6px;"></i>
+        Web Projects
+      </h3>
+      <p>
+        مواقع ويب احترافية لمشاريع حقيقية، مع تصميم عصري وتجربة مستخدم سلسة.
+      </p>
+    </div>
+
+    <div class="project">
+      <h3>
+        <i class="fa-solid fa-chart-simple" style="color:#facc15; margin-right:6px;"></i>
+        Dashboard
+      </h3>
+      <p>
+        لوحات تحكم مخصصة لإدارة البيانات، عرض الإحصائيات والتحليلات بطريقة واضحة وسهلة الاستخدام.
+      </p>
+    </div>
+  </div>
+</section>
+    
+
+<section class="music">
+<audio controls>
+<source src="assets/music/music.mp3" type="audio/mpeg">
+</audio>
+</section>
+
+<section style="margin-top:60px">
+  <h2>Contact</h2>
+  <div class="contact-grid">
+
+    <!-- Instagram (الأول) -->
+    <div class="contact-card">
+      <a href="https://www.instagram.com/amrayman7070?igsh=MXE1NW43Nno2NTFwMA==" target="_blank">
+        <i class="fa-brands fa-instagram"></i> Instagram
+      </a>
+    </div>
+
+    <!-- Facebook -->
+    <div class="contact-card">
+      <a href="https://www.facebook.com/share/1FaPTyVYdm/" target="_blank">
+        <i class="fa-brands fa-facebook"></i> Facebook
+      </a>
+    </div>
+
+    <!-- WhatsApp -->
+    <div class="contact-card">
+      <a href="https://wa.me/qr/FPEBK42OQPEFK1" target="_blank">
+        <i class="fa-brands fa-whatsapp"></i> WhatsApp
+      </a>
+    </div>
+
+    <!-- YouTube -->
+    <div class="contact-card">
+      <a href="https://youtube.com/@8global_x?si=csoq9deQPWBTzDPJ" target="_blank">
+        <i class="fa-brands fa-youtube"></i> YouTube
+      </a>
+    </div>
+
+    <!-- Discord -->
+    <div class="contact-card">
+      <a href="https://discord.gg/N4f4rsfSkR" target="_blank">
+        <i class="fa-brands fa-discord"></i> Discord
+      </a>
+    </div>
+
+    <!-- Email -->
+    <div class="contact-card email-card">
+      <a href="mailto:amramramr0044@gmail.com">
+        <i class="fa-solid fa-envelope"></i> amramramr0044@gmail.com
+      </a>
+    </div>
+
+  </div>
+</section>
+    
+    
+<style>
+/* منع أي تأثير على مربع الإيميل */
+.email-card {
+  transform: none !important;       /* لا يتحرك */
+  box-shadow: 0 8px 25px rgba(124,58,237,0.3) !important; /* ظل ثابت */
+  cursor: default;                  /* مؤشر عادي */
+  transition: none !important;      /* لا يوجد انتقال */
+}
+
+.email-card:hover,
+.email-card:active {
+  transform: none !important;
+  box-shadow: 0 8px 25px rgba(124,58,237,0.3) !important;
+}
+</style>
+    
+<footer style="text-align:center; margin-top:60px; padding:30px 20px; color:var(--muted); font-size:16px; line-height:1.8; border-top:1px solid rgba(255,255,255,0.08);">
+  <p>© 2026 جميع الحقوق محفوظة لـ <strong>Amr Ayman</strong> ولفريق <strong>Global X</strong>.</p>
+  <div style="margin-top:12px; display:flex; justify-content:center; gap:20px; font-size:20px; color:var(--accent);">
+    <i class="fa-brands fa-discord"></i>
+    <i class="fa-brands fa-yottube"></i>
+    <i class="fa-brands fa-facebook"></i>
+  </div>
+</footer>
+    
+<script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+<script>
+window.onload = () => {
+    document.getElementById("loader").style.display="none"
+}
+
+/* particles */
+particlesJS("particles-js",{
+particles:{
+number:{value:70},
+color:{value:"#7c3aed"},
+shape:{type:"circle"},
+opacity:{value:0.4},
+size:{value:3},
+move:{enable:true,speed:1}
+}
+})
+
+/* NAVBAR LOGIC */
+const navbar = document.getElementById("navbar");
+window.addEventListener("scroll", () => {
+    if (window.scrollY > 10) {
+        navbar.classList.add("hide");
+    } else {
+        navbar.classList.remove("hide");
+    }
+});
+</script>
+</body>
+</html>
